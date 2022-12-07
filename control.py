@@ -11,18 +11,17 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger('CONTROLLER')
 logger.setLevel(logging.INFO)
 
-
 commands_active = True
 
-controller = None
-
 app = Flask(__name__)
+
 
 class Controller:
     _response = None
     _command = None
     _request_queue = []
     _requesting_thread = None
+    _response_received = False
 
     # Hier wird die Response des EV3 Servers angenommen
     def process_response(self, response):
@@ -32,38 +31,39 @@ class Controller:
 
     # Fügt einen neue Request der Queue hinzu.
     def add_request_to_queue(self, methode, parameter):
-        logger.info("Added %s", dict(methode=methode, parameter=parameter))
+        logger.info(f"Added {methode}, {parameter}")
         self._request_queue.append(dict(methode=methode, parameter=parameter))
 
     def start_requesting(self):
-        def _start_requesting(self):
-            logger.info("Monit Requests")
-            while True:
-                self._response_received = False
-                if len(self._request_queue) > 0:
-                    logger.info("Pop Request")
-                    _request = self._request_queue.pop(0)
-                    self._client.send_server_request(
-                        _request.get("methode"), _request.get("parameter"))
-                    logger.info("Send Request")
-                logger.info('Schleife')
-                sleep(1)
-                while self._response_received is False:
-                    sleep(1)
+        logger.info("Monit Requests")
+        while True:
+            self._response_received = False
+            logger.info("Pop Request")
+            _request = self._request_queue.pop(0)
+            self._client.send_server_request(
+                _request.get("methode"), _request.get("parameter"))
+            logger.info("Send Request")
+            logger.info('Schleife')
+        sleep(1)
+        while self._response_received is False:
+            sleep(1)
 
-        self._requesting_thread = threading.Thread(
-            target=_start_requesting, args=(self,), daemon=True)
-        self._requesting_thread.start()
 
-    @property
-    def response(self):
-        logger.debug("Response %s", self._response)
-        return self._response
+@property
+def response(self):
+    logger.debug("Response %s", self._response)
+    return self._response
 
-    def __init__(self):
-        self.client = client.Client(self)
-        self._response_received = False
-        self.start_requesting()
+
+def __init__(self):
+    self.client = client.Client(self)
+    self._response_received = False
+    self._requesting_thread = threading.Thread(
+        target=self.start_requesting, args=(), daemon=True)
+    self._requesting_thread.start()
+
+
+controller = Controller()
 
 
 @app.route('/forward')
@@ -89,8 +89,8 @@ def move_forwards():
         if speed > 100:
             speed = 100
         if speed > 0 and timeout > 0:
-            controller.add_request_to_queue("POST", dict(
-                command="forwards", timeout=timeout, speed=speed))
+            logger.info(f"{dict(command='forwards', timeout=timeout, speed=speed)}")
+            controller.add_request_to_queue("POST", dict(command="forwards", timeout=timeout, speed=speed))
             return f"Fahre vorwärts {timeout} Sekunden lang mit einer Geschwindigkeit von {speed} %"
 
 
@@ -143,7 +143,5 @@ def rotate_for(degrees=None):
 if __name__ == "__main__":
     logger = logging.getLogger('DISCORD BOT')
     logger.setLevel(level=logging.INFO)
-
-    controller = Controller()
 
     app.run()
