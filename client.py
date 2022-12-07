@@ -9,7 +9,7 @@ import io
 import struct
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s")
-logger = logging.getLogger('PI CLIENT')
+logger = logging.getLogger('CLIENT')
 logger.setLevel(logging.INFO)
 
 
@@ -29,7 +29,7 @@ class Client:
     def send_server_request(self, methode, parameter):
         sel = selectors.DefaultSelector()
         address = (self.host, self.port)
-        logger.debug("Starting connection to %s", address)
+        logger.info("Starting connection to %s", address)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setblocking(False)
         sock.connect_ex(address)
@@ -67,7 +67,7 @@ class Client:
 
 
 class Message:
-    def __init__(self, selector, sock, addr, request, pi_controller):
+    def __init__(self, selector, sock, addr, request, controller):
         self.selector = selector
         self.sock = sock
         self.addr = addr
@@ -78,7 +78,7 @@ class Message:
         self._jsonheader_len = None
         self.jsonheader = None
         self.response = None
-        self.pi_controller = pi_controller
+        self.controller = controller
 
     def _set_selector_events_mask(self, mode):
         """Set selector to listen for events: mode is 'r', 'w', or 'rw'."""
@@ -149,7 +149,7 @@ class Message:
         if self.response.get("methode") == "RESPONSE":
             logger.debug("Received Response: Methode: %s; Description: %s; Value: %s", self.response.get("methode"),
                         self.response.get("description"), self.response.get("value"))
-        self.pi_controller.process_response(self.response)
+        self.controller.process_response(self.response)
 
     def process_events(self, mask):
         if mask & selectors.EVENT_READ:
