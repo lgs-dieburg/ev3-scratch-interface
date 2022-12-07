@@ -77,7 +77,7 @@ class PiController:
         threading.Thread(target=_queue_get_distance_data, args=(self,), daemon=True).start()
 
     def __init__(self):
-        self.pi_client = pi_client.PiClient(self)
+        self.client = client.Client(self)
         self._response_received = False
         logger.debug("Server created. Going to start server")
         self.start_requesting()

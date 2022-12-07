@@ -21,7 +21,7 @@ def _create_request_message(methode, parameter):
     )
 
 
-class PiClient:
+class Client:
     settings = None
     host = None
     port = None
@@ -35,8 +35,7 @@ class PiClient:
         sock.connect_ex(address)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         request = _create_request_message(methode, parameter)
-        if parameter != "distance_data":
-            logger.info("Send %s | %s", methode, parameter)
+        logger.info("Send %s | %s", methode, parameter)
         message = Message(sel, sock, address, request, self.pi_controller)
         sel.register(sock, events, data=message)
 
