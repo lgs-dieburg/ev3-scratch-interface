@@ -1,4 +1,5 @@
 class ScratchFetch {
+
     constructor() {
     }
 
@@ -8,7 +9,7 @@ class ScratchFetch {
             "name": "EV3 Scratch Interface",
             "blocks": [
                 {
-                    "opcode": "fetchURL",
+                    "opcode": "forwards",
                     "blockType": "command",
                     "text": "Fahre vorwärts für [timeout] Sekunden",
                     "arguments": {
@@ -19,7 +20,7 @@ class ScratchFetch {
                     }
                 },
                 {
-                    "opcode": "fetchURL",
+                    "opcode": "backwards",
                     "blockType": "command",
                     "text": "Fahre rückwärts für [timeout] Sekunden",
                     "arguments": {
@@ -30,13 +31,13 @@ class ScratchFetch {
                     }
                 },
                 {
-                    "opcode": "fetchURL",
+                    "opcode": "turn",
                     "blockType": "command",
                     "text": "Dreh dich um [degrees] Grad",
                     "arguments": {
                         "degrees": {
                             "type": "number",
-                            "defaultValue": 2
+                            "defaultValue": 90
                         },
                     }
                 }
@@ -44,8 +45,26 @@ class ScratchFetch {
         };
     }
 
-    fetchURL({ url }) {
-        return fetch(url, {
+    url = "https://e13d-213-157-8-90.eu.ngrok.io/"
+
+    forwards({timeout}){
+        return fetch([this.url, "forwards?timeout=", timeout, "&speed=50"].join(""), {
+            headers: new Headers({
+                "ngrok-skip-browser-waring": "69"
+            }),
+        }).then(response => response.text())
+    }
+
+    backwards({timeout}){
+        return fetch([this.url, "backwards?timeout=", timeout, "&speed=50"].join(""), {
+            headers: new Headers({
+                "ngrok-skip-browser-waring": "69"
+            }),
+        }).then(response => response.text())
+    }
+
+    turn({degrees}){
+        return fetch([this.url, "turn?degrees=", degrees].join(""), {
             headers: new Headers({
                 "ngrok-skip-browser-waring": "69"
             }),
