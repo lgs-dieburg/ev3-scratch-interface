@@ -12,6 +12,7 @@ logger = logging.getLogger('CONTROLLER')
 logger.setLevel(logging.INFO)
 
 commands_active = True
+controller = None
 
 app = Flask(__name__)
 
@@ -38,41 +39,52 @@ class Controller:
         logger.info("Monit Requests")
         while True:
             self._response_received = False
-            logger.info("Pop Request")
-            _request = self._request_queue.pop(0)
-            self._client.send_server_request(
-                _request.get("methode"), _request.get("parameter"))
-            logger.info("Send Request")
-            logger.info('Schleife')
+            if len(self._request_queue) > 0:
+                logger.info("Pop Request")
+                _request = self._request_queue.pop(0)
+                self._client.send_server_request(_request.get("methode"), _request.get("parameter"))
+                logger.info("Send Request")
         sleep(1)
         while self._response_received is False:
             sleep(1)
 
+    @property
+    def response(self):
+        logger.debug("Response %s", self._response)
+        return self._response
 
-@property
-def response(self):
-    logger.debug("Response %s", self._response)
-    return self._response
 
-
-def __init__(self):
-    self.client = client.Client(self)
-    self._response_received = False
-    self._requesting_thread = threading.Thread(
-        target=self.start_requesting, args=(), daemon=True)
-    self._requesting_thread.start()
-
+    def __init__(self):
+        logger.info("Create Logger")
+        
+        self._client = client.Client(self)
+        self._response_received = False
+        self._requesting_thread = threading.Thread(
+            target=self.start_requesting, args=(), daemon=True)
+        self._requesting_thread.start()
 
 controller = Controller()
 
+@app.before_first_request
+def before_first_request():
+    logger = logging.getLogger('DISCORD BOT')
+    logger.setLevel(level=logging.INFO)
 
-@app.route('/forward')
+    logger.info("Before first request")
+    
+    # controller = Controller()
+
+
+@app.route('/forwards')
 def move_forwards():
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
 
     timeout = int(timeout)
     speed = int(speed)
+
+
+    
     if not commands_active:
         logger.info("Commands are not active")
         return "Befehle sind gerade deaktiviert."
@@ -94,9 +106,14 @@ def move_forwards():
             return f"Fahre vorwärts {timeout} Sekunden lang mit einer Geschwindigkeit von {speed} %"
 
 
-def move_backwards(timeout=None, speed=None):
+@app.route('/backwards')
+def move_backwards():
+    timeout = request.args.get("timeout")
+    speed = request.args.get("speed")
+    
     timeout = int(timeout)
     speed = int(speed)
+    
     if not commands_active:
         logger.info("Commands are not active")
     elif timeout is None or speed is None:
@@ -114,14 +131,18 @@ def move_backwards(timeout=None, speed=None):
         if speed > 0 and timeout > 0:
             controller.add_request_to_queue("POST", dict(
                 command="backwards", timeout=timeout, speed=speed))
+            return "backwards"
 
 
-def rotate_for(degrees=None):
+@app.route("/turn")
+def rotate_for():
     """
     Führt Rotate Befehl aus
     :param degrees: Gradzahl wie weit sich EV3 drehen soll
     :return:
     """
+    degrees = request.args.get("degrees")
+    
     if not commands_active:
         logger.info("Commands are not active")
     elif degrees is None:
@@ -138,10 +159,8 @@ def rotate_for(degrees=None):
         if degrees != 0:
             controller.add_request_to_queue(
                 "POST", dict(command="rotate", degrees=degrees))
+            return 'Turn'
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger('DISCORD BOT')
-    logger.setLevel(level=logging.INFO)
-
-    app.run()
+    app.run(host='127.0.0.1', port=5000)
