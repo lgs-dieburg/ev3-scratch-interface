@@ -2,6 +2,7 @@
 import logging
 import threading
 from flask import Flask
+from flask_cors import CORS, cross_origin
 from flask import request
 from time import sleep
 import client
@@ -15,7 +16,8 @@ commands_active = True
 controller = None
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 class Controller:
     _response = None
@@ -76,6 +78,7 @@ def before_first_request():
 
 
 @app.route('/forwards')
+@cross_origin()
 def move_forwards():
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
@@ -107,6 +110,7 @@ def move_forwards():
 
 
 @app.route('/backwards')
+@cross_origin()
 def move_backwards():
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
@@ -135,6 +139,7 @@ def move_backwards():
 
 
 @app.route("/turn")
+@cross_origin()
 def rotate_for():
     """
     Führt Rotate Befehl aus
@@ -163,4 +168,4 @@ def rotate_for():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1 ', port=5000)
