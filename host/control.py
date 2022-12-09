@@ -39,13 +39,11 @@ class Controller:
         while True:
             self._response_received = False
             if len(self._request_queue) > 0:
-                logger.info("Pop Request")
                 _request = self._request_queue.pop(0)
                 self._client.send_server_request(_request.get("methode"), _request.get("parameter"))
-                logger.info("Send Request")
-            sleep(1)
-            while self._response_received is False:
                 sleep(1)
+                while self._response_received is False:
+                    sleep(1)
 
     @property
     def response(self):
