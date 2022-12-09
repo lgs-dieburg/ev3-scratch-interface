@@ -2,7 +2,7 @@
 import logging
 import threading
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask import request
 from time import sleep
 import client
@@ -79,6 +79,7 @@ app = create_app()
 
 
 @app.route('/forwards')
+@cross_origin()
 def move_forwards():
     global controller
 
@@ -110,6 +111,7 @@ def move_forwards():
 
 
 @app.route('/backwards')
+@cross_origin()
 def move_backwards():
     global controller
 
@@ -140,6 +142,7 @@ def move_backwards():
 
 
 @app.route("/turn")
+@cross_origin()
 def rotate_for():
     """
     Führt Rotate Befehl aus
