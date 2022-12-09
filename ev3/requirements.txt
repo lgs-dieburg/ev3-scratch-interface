@@ -1,0 +1,2 @@
+Pillow==8.4.0
+python-ev3dev2==2.1.0.post1
