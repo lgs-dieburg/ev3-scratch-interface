@@ -6,6 +6,8 @@ class ScratchFetch {
             .then(res => res.text())
             .then(res => JSON.parse(res))
             .then(res => this.url = res.contents)
+
+        console.log(this.url)
     }
 
     getInfo() {
