@@ -1,12 +1,7 @@
-const getUrl = () => {
-    return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/21586fb5a2d78be8c27ecb380fb30e595b6ee00d/localtunnel_ev3_scratch_interface')}`).then(res => res.text()).then(res => JSON.parse(res)).then(res => res.contents)
-}
-
-const url = getUrl()
-
 class ScratchFetch {
-
-    constructor() {
+    url
+    async constructor() {
+        this.url = JSON.parse(await (await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/21586fb5a2d78be8c27ecb380fb30e595b6ee00d/localtunnel_ev3_scratch_interface')}`)).text()).contents
     }
 
     getInfo() {
@@ -52,7 +47,7 @@ class ScratchFetch {
     }
 
     forwards({ timeout }) {
-        return fetch([url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
+        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
@@ -61,7 +56,7 @@ class ScratchFetch {
     }
 
     backwards({ timeout }) {
-        return fetch([url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
+        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
@@ -70,7 +65,7 @@ class ScratchFetch {
     }
 
     turn({ degrees }) {
-        return fetch([url, "/turn?degrees=", degrees].join(""), {
+        return fetch([this.url, "/turn?degrees=", degrees].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
