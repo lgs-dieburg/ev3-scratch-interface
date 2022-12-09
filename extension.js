@@ -70,7 +70,6 @@ class ScratchFetch {
 
     turn({degrees}) {
         return fetch([this.url, "/turn?degrees=", degrees].join(""), {
-            mode: "no-cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
