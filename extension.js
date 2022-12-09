@@ -45,7 +45,7 @@ class ScratchFetch {
         };
     }
 
-    url = "https://e13d-213-157-8-90.eu.ngrok.io/"
+    url = "https://2f9d-2001-9e8-21cb-f00-ad2b-9313-6369-4f8e.eu.ngrok.io"
 
     forwards({timeout}){
         return fetch([this.url, "forwards?timeout=", timeout, "&speed=50"].join(""), {
