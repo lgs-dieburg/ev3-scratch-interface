@@ -2,7 +2,7 @@ class ScratchFetch {
     url
 
     constructor() {
-        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/21586fb5a2d78be8c27ecb380fb30e595b6ee00d/localtunnel_ev3_scratch_interface')}`)
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}`)
             .then(res => res.text())
             .then(res => JSON.parse(res))
             .then(res => this.url = res.contents)
