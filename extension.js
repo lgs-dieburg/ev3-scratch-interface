@@ -50,9 +50,10 @@ class ScratchFetch {
         };
     }
 
-    // INFO Fetch Requests mit default mode & new Header: ngrok-skip-browser-warning
+    // INFO Fetch Requests mode: cors & new Header: ngrok-skip-browser-warning
     forwards({timeout}) {
         return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
+            mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
@@ -61,6 +62,7 @@ class ScratchFetch {
 
     backwards({timeout}) {
         return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
+            mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
@@ -69,6 +71,7 @@ class ScratchFetch {
 
     turn({degrees}) {
         return fetch([this.url, "/turn?degrees=", degrees].join(""), {
+            mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
