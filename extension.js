@@ -52,6 +52,7 @@ class ScratchFetch {
 
     forwards({timeout}) {
         return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
+            mode: "no-cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
@@ -60,6 +61,7 @@ class ScratchFetch {
 
     backwards({timeout}) {
         return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
+            mode: "no-cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
@@ -68,6 +70,7 @@ class ScratchFetch {
 
     turn({degrees}) {
         return fetch([this.url, "/turn?degrees=", degrees].join(""), {
+            mode: "no-cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
             })
