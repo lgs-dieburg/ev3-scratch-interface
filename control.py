@@ -2,7 +2,7 @@
 import logging
 import threading
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask import request
 from time import sleep
 import client
@@ -15,9 +15,6 @@ logger.setLevel(logging.INFO)
 commands_active = True
 controller = None
 
-app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 class Controller:
     _response = None
@@ -46,48 +43,51 @@ class Controller:
                 _request = self._request_queue.pop(0)
                 self._client.send_server_request(_request.get("methode"), _request.get("parameter"))
                 logger.info("Send Request")
-        sleep(1)
-        while self._response_received is False:
             sleep(1)
+            while self._response_received is False:
+                sleep(1)
 
     @property
     def response(self):
         logger.debug("Response %s", self._response)
         return self._response
 
-
     def __init__(self):
         logger.info("Create Logger")
-        
+
         self._client = client.Client(self)
         self._response_received = False
         self._requesting_thread = threading.Thread(
             target=self.start_requesting, args=(), daemon=True)
         self._requesting_thread.start()
 
-controller = Controller()
 
-@app.before_first_request
-def before_first_request():
-    logger = logging.getLogger('DISCORD BOT')
-    logger.setLevel(level=logging.INFO)
+def create_app():
+    global controller
 
-    logger.info("Before first request")
-    
-    # controller = Controller()
+    app = Flask(__name__)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
+
+    with app.app_context():
+        controller = Controller()
+
+    return app
+
+
+app = create_app()
 
 
 @app.route('/forwards')
-@cross_origin()
 def move_forwards():
+    global controller
+
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
 
     timeout = int(timeout)
     speed = int(speed)
 
-
-    
     if not commands_active:
         logger.info("Commands are not active")
         return "Befehle sind gerade deaktiviert."
@@ -110,14 +110,15 @@ def move_forwards():
 
 
 @app.route('/backwards')
-@cross_origin()
 def move_backwards():
+    global controller
+
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
-    
+
     timeout = int(timeout)
     speed = int(speed)
-    
+
     if not commands_active:
         logger.info("Commands are not active")
     elif timeout is None or speed is None:
@@ -139,15 +140,16 @@ def move_backwards():
 
 
 @app.route("/turn")
-@cross_origin()
 def rotate_for():
     """
     Führt Rotate Befehl aus
     :param degrees: Gradzahl wie weit sich EV3 drehen soll
     :return:
     """
+    global controller
+
     degrees = request.args.get("degrees")
-    
+
     if not commands_active:
         logger.info("Commands are not active")
     elif degrees is None:
@@ -168,4 +170,4 @@ def rotate_for():
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1 ', port=5000)
+    app.run(port=5000)
