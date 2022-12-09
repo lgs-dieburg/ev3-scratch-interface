@@ -9,7 +9,8 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 
 #### EV3
 - Verbinde den EV3 in das gleiche Netzwerk, mit dem auch der Host Computer verbunden ist.
-  - Am einfachsten ist es, den EV3 mit dem Hotspot des Host Computer zu verbinden.    
+  - Am einfachsten ist es, den EV3 mit dem Hotspot des Host Computer zu verbinden.  
+  - Wahrscheinlich wird für eine Wifi Verbindung eine 2.4 GHz Netzwerk benötigt. 
 - Definiere die IP-Adresse des EV3 Roboters in settings.json
 - Starte ev3_control.py
 
