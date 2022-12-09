@@ -1,3 +1,14 @@
+const getUrl = () => {
+    return fetch("https://pastebin.com/raw/p4grLsvV", {
+        mode: "cors",
+        headers: new Headers({
+          'content-type': 'application/json'
+        })
+      }).then(res => res.text())
+}
+
+const url = getUrl()
+
 class ScratchFetch {
 
     constructor() {
@@ -45,10 +56,8 @@ class ScratchFetch {
         };
     }
 
-    url = "https://2f9d-2001-9e8-21cb-f00-ad2b-9313-6369-4f8e.eu.ngrok.io"
-
     forwards({timeout}){
-        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
+        return fetch([url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
@@ -57,7 +66,7 @@ class ScratchFetch {
     }
 
     backwards({timeout}){
-        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
+        return fetch([url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
@@ -66,7 +75,7 @@ class ScratchFetch {
     }
 
     turn({degrees}){
-        return fetch([this.url, "/turn?degrees=", degrees].join(""), {
+        return fetch([url, "/turn?degrees=", degrees].join(""), {
             mode: "no-cors",
             headers: {
                 "ngrok-skip-browser-warning": "69420"
