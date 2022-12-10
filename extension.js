@@ -3,11 +3,9 @@ class ScratchFetch {
     availableUnits = []
 
     constructor() {
-        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
-            .then(res => res.text())
-            .then(res => JSON.parse(res))
-            .then(res => {
-                this.availableUnits = res
+        this.getAvailableUnits()
+            .then(r => {
+                this.availableUnits = r
                 this.setURL({index: 0})
             })
     }
@@ -62,7 +60,7 @@ class ScratchFetch {
                     },
                     "menus": {
                         "availableUnits": {
-                            "items": (await this.availableUnits).map(val => val.name)
+                            "items": (await this.getAvailableUnits()).map(val => val.name)
                         },
                     }
                 }
@@ -104,6 +102,13 @@ class ScratchFetch {
         } else {
             this.url = this.availableUnits[index].url
         }
+    }
+
+    async getAvailableUnits(){
+        let res = await fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
+        res = await res.text()
+        res = JSON.parse(res)
+        return res
     }
 }
 
