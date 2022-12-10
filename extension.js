@@ -1,6 +1,6 @@
 class ScratchFetch {
     url
-    availableUnits
+    availableUnits = []
 
     constructor() {
         fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
@@ -12,7 +12,7 @@ class ScratchFetch {
             })
     }
 
-    getInfo() {
+    async getInfo() {
         return {
             "id": "MilanTheissEv3ScratchInterface",
             "name": "EV3 Scratch Interface",
@@ -62,7 +62,7 @@ class ScratchFetch {
                     },
                     "menus": {
                         "availableUnits": {
-                            "items": this.availableUnits.map(val => val.name)
+                            "items": (await this.availableUnits).map(val => val.name)
                         },
                     }
                 }
