@@ -51,29 +51,17 @@ class ScratchFetch {
                 {
                     "opcode": "setURL",
                     "blockType": "command",
-                    "text": "Führe auf dem [unit] aus",
+                    "text": "Führe auf dem [unitName] aus",
                     "arguments": {
-                        "unit": {
+                        "unitName": {
                             "type": "text",
                             "menu": "units"
-                        }
-                    }
-                },
-                {
-                    "opcode": "dummy",
-                    "blockType": "command",
-                    "text": "Test [unit]",
-                    "arguments": {
-                        "unit": {
-                            "type": "text",
-                            "menu": "testM"
                         }
                     }
                 }
             ],
             "menus": {
                 "units": (await this.getAvailableUnits()).map(val => val.name),
-                "testM": ["ev3lgs3", "ev3lgs4"],
             }
         };
     }
@@ -108,10 +96,13 @@ class ScratchFetch {
 
     setURL({unitName = undefined, index = 0}) {
         if (typeof unitName !== "undefined") {
+            console.log(unitName)
             this.url = this.availableUnits.find(val => val.name === unitName).url
         } else {
             this.url = this.availableUnits[index].url
         }
+
+        console.log(`Ausgewählte URL: ${this.url}`)
     }
 
     async getAvailableUnits(){
@@ -120,10 +111,6 @@ class ScratchFetch {
         res = JSON.parse(res)
         console.log(res)
         return res
-    }
-
-    dummy(){
-        return 'HELLO'
     }
 }
 
