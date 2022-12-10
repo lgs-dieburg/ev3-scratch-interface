@@ -51,7 +51,7 @@ class ScratchFetch {
                 {
                     "opcode": "setURL",
                     "blockType": "command",
-                    "text": "Führe auf dem [availableUnits] aus",
+                    "text": "Führe auf dem [unit] aus",
                     "arguments": {
                         "unit": {
                             "type": "text",
@@ -67,7 +67,7 @@ class ScratchFetch {
                 {
                     "opcode": "dummy",
                     "blockType": "command",
-                    "text": "Test [menu]",
+                    "text": "Test [unit]",
                     "arguments": {
                         "unit": {
                             "type": "text",
