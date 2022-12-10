@@ -2,12 +2,7 @@ class ScratchFetch {
     url
 
     constructor() {
-        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}`)
-            .then(res => res.text())
-            .then(res => JSON.parse(res))
-            .then(res => this.url = res.contents)
-
-        console.log(this.url)
+        this.fetchURL().then(r => console.log(r))
     }
 
     getInfo() {
@@ -47,7 +42,12 @@ class ScratchFetch {
                             "defaultValue": 90
                         },
                     }
-                }
+                },
+                {
+                    "opcode": "forwards",
+                    "blockType": "command",
+                    "text": "Fetch Localtunnel"
+                },
             ],
         };
     }
@@ -78,6 +78,12 @@ class ScratchFetch {
                 "ngrok-skip-browser-warning": "69420"
             })
         }).then(response => response.text())
+    }
+    fetchURL(){
+        return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}`)
+            .then(res => res.text())
+            .then(res => JSON.parse(res))
+            .then(res => this.url = res.contents)
     }
 }
 
