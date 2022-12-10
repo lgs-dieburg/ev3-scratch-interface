@@ -1,6 +1,6 @@
 class ScratchFetch {
     url
-    availableUnits = []
+    availableUnits
 
     constructor() {
         this.getAvailableUnits()
@@ -51,16 +51,32 @@ class ScratchFetch {
                 {
                     "opcode": "setURL",
                     "blockType": "command",
-                    "text": "Führe auf dem [availableUnits] Grad",
+                    "text": "Führe auf dem [availableUnits] aus",
                     "arguments": {
                         "unit": {
                             "type": "text",
-                            "menu": "availableUnits"
+                            "menu": "units"
                         }
                     },
                     "menus": {
-                        "availableUnits": {
+                        "units": {
                             "items": (await this.getAvailableUnits()).map(val => val.name)
+                        },
+                    }
+                },
+                {
+                    "opcode": "dummy",
+                    "blockType": "command",
+                    "text": "Test [menu]",
+                    "arguments": {
+                        "unit": {
+                            "type": "text",
+                            "menu": "units"
+                        }
+                    },
+                    "menus": {
+                        "units": {
+                            "items": ["ev3lgs3", "ev3lgs4"]
                         },
                     }
                 }
@@ -108,7 +124,12 @@ class ScratchFetch {
         let res = await fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
         res = await res.text()
         res = JSON.parse(res)
+        console.log(res)
         return res
+    }
+
+    dummy(){
+        return 'HELLO'
     }
 }
 
