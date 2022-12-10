@@ -6,8 +6,10 @@ class ScratchFetch {
         fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
             .then(res => res.text())
             .then(res => JSON.parse(res))
-            .then(res => this.availableUnits = res)
-        this.setURL({index: 0})
+            .then(res => {
+                this.availableUnits = res
+                this.setURL({index: 0})
+            })
     }
 
     getInfo() {
