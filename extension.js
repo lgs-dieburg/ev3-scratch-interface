@@ -57,11 +57,6 @@ class ScratchFetch {
                             "type": "text",
                             "menu": "units"
                         }
-                    },
-                    "menus": {
-                        "units": {
-                            "items": (await this.getAvailableUnits()).map(val => val.name)
-                        },
                     }
                 },
                 {
@@ -71,16 +66,15 @@ class ScratchFetch {
                     "arguments": {
                         "unit": {
                             "type": "text",
-                            "menu": "units"
+                            "menu": "testM"
                         }
-                    },
-                    "menus": {
-                        "units": {
-                            "items": ["ev3lgs3", "ev3lgs4"]
-                        },
                     }
                 }
             ],
+            "menus": {
+                "units": (await this.getAvailableUnits()).map(val => val.name),
+                "testM": ["ev3lgs3", "ev3lgs4"],
+            }
         };
     }
 
