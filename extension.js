@@ -1,10 +1,13 @@
 class ScratchFetch {
     url
+    availableUnits
 
     constructor() {
-        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}&disableCache=true    `)
+        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}&disableCache=true`)
             .then(res => res.text())
-            .then(res => this.url = res)
+            .then(res => JSON.parse(res))
+            .then(res => this.availableUnits = res)
+        this.setURL({index: 0})
     }
 
     getInfo() {
@@ -44,6 +47,22 @@ class ScratchFetch {
                             "defaultValue": 90
                         },
                     }
+                },
+                {
+                    "opcode": "setURL",
+                    "blockType": "command",
+                    "text": "Führe auf dem [availableUnits] Grad",
+                    "arguments": {
+                        "unit": {
+                            "type": "text",
+                            "menu": "availableUnits"
+                        }
+                    },
+                    "menus": {
+                        "availableUnits": {
+                            "items": this.getNamesOfAllAvailableUnits(this.availableUnits)
+                        },
+                    }
                 }
             ],
         };
@@ -75,6 +94,18 @@ class ScratchFetch {
                 "ngrok-skip-browser-warning": "69420"
             })
         }).then(response => response.text())
+    }
+
+    setURL({unitName = undefined, index = 0}) {
+        if (typeof unitName !== "undefined") {
+            this.url = this.availableUnits.find(val => val.name === unitName).url
+        } else {
+            this.url = this.availableUnits[index].url
+        }
+    }
+
+    getNamesOfAllAvailableUnits(availableUnits) {
+        return availableUnits.map(val => val.name)
     }
 }
 
