@@ -3,7 +3,7 @@ class ScratchFetch {
     availableUnits
 
     constructor() {
-        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}&disableCache=true`)
+        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json')}&disableCache=true`)
             .then(res => res.text())
             .then(res => JSON.parse(res))
             .then(res => this.availableUnits = res)
