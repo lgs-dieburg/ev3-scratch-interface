@@ -62,7 +62,7 @@ class ScratchFetch {
                     },
                     "menus": {
                         "availableUnits": {
-                            "items": this.getNamesOfAllAvailableUnits()
+                            "items": this.availableUnits.map(val => val.name)
                         },
                     }
                 }
@@ -104,10 +104,6 @@ class ScratchFetch {
         } else {
             this.url = this.availableUnits[index].url
         }
-    }
-
-    getNamesOfAllAvailableUnits() {
-        return this.availableUnits.map(val => val.name)
     }
 }
 
