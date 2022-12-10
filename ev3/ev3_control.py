@@ -15,11 +15,8 @@ logger.setLevel(logging.DEBUG)
 
 gamepad = GamepadHandler(Gamepad())
 
-motors = MoveJoystick("outB", "outA")
-movetank = MoveTank("outB", "outA")
-
-motorD = Motor("outB")
-motorA = Motor("outA")
+motors = MoveJoystick("outA", "outB")
+movetank = MoveTank("outA", "outB")
 
 
 def action_left_stick():
@@ -43,17 +40,18 @@ class EV3Controller:
         logger.info("Processing Request: %s", request)
         if request.get("methode") == "POST":
             if request.get("parameter").get("command") == "forwards":
-                timeout = int(request.get("parameter").get("timeout"))
-                speed = int(request.get("parameter").get("speed"))
-                movetank.on_for_seconds(speed, speed, timeout)
+                timeout = float(request.get("parameter").get("timeout"))
+                speed = float(request.get("parameter").get("speed"))
+                logger.info(speed)
+                movetank.on_for_seconds(speed * 0.9926, speed, timeout)
                 self._response = dict(methode="RESPONSE", description="CONFIRMATION")
             elif request.get("parameter").get("command") == "backwards":
-                timeout = int(request.get("parameter").get("timeout"))
-                speed = int(request.get("parameter").get("speed")) * -1
+                timeout = float(request.get("parameter").get("timeout"))
+                speed = float(request.get("parameter").get("speed")) * -1
                 movetank.on_for_seconds(speed, speed, timeout)
                 self._response = dict(methode="RESPONSE", description="CONFIRMATION")
             elif request.get("parameter").get("command") == "rotate":
-                degrees = int(request.get("parameter").get("degrees"))
+                degrees = float(request.get("parameter").get("degrees"))
                 corrected = degrees * self._rotation_ratio
                 logger.info("%s ROTATIONS", corrected)
                 movetank.on_for_rotations(-70, 70, corrected)

@@ -84,8 +84,8 @@ def move_forwards():
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
 
-    timeout = int(timeout)
-    speed = int(speed)
+    timeout = float(timeout)
+    speed = float(speed)
 
     if not commands_active:
         logger.info("Commands are not active")
@@ -116,8 +116,8 @@ def move_backwards():
     timeout = request.args.get("timeout")
     speed = request.args.get("speed")
 
-    timeout = int(timeout)
-    speed = int(speed)
+    timeout = float(timeout)
+    speed = float(speed)
 
     if not commands_active:
         logger.info("Commands are not active")
