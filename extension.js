@@ -2,7 +2,9 @@ class ScratchFetch {
     url
 
     constructor() {
-        this.fetchURL().then(r => console.log(r))
+        fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}&disableCache=true    `)
+            .then(res => res.text())
+            .then(res => this.url = res)
     }
 
     getInfo() {
