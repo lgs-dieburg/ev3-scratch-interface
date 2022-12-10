@@ -80,10 +80,9 @@ class ScratchFetch {
         }).then(response => response.text())
     }
     fetchURL(){
-        return fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}`)
+        return fetch(`https://allorigins.hexlet.app/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/aebe6ff4e1afaa380688319b28072616/raw/localtunnel_ev3_scratch_interface')}&disableCache=true    `)
             .then(res => res.text())
-            .then(res => JSON.parse(res))
-            .then(res => this.url = res.contents)
+            .then(res => this.url = res)
     }
 }
 
