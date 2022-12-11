@@ -10,9 +10,10 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 ## Setup
 
 #### EV3
-- Verbinde den EV3 in das gleiche Netzwerk, mit dem auch der Host Computer verbunden ist.
+- Verbinde den EV3 über das gleiche Netzwerk mit dem Host Computer.
   - Am einfachsten ist es, den EV3 mit dem Hotspot des Host Computer zu verbinden.  
-  - Wahrscheinlich wird für eine Wifi Verbindung eine 2.4 GHz Netzwerk benötigt. 
+  - Wenn der EV3 keine Verbindung findet, kontrolliere mit wie viel GHz des Wifi arbeitet.  
+  Wahrscheinlich wird für eine 2.4 GHz Wifi Verbindung benötigt. 
 - Definiere die IP-Adresse des EV3 Roboters in settings.json
 - Starte ev3_control.py
 
@@ -21,11 +22,10 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 - Starte control.py
   - Die REST API startet standardmäßig auf http://localhost:5000
 - Öffne einen Localtunnle mit [ngrok](https://ngrok.com) Port 5000 - `ngrok http 5000`
-- Übertrage die URL in extension.js
-  - Wenn extension.js committed wird, startet eine [Github Action](https://github.com/milantheiss/ev3-scratch-interface/actions/workflows/pages/pages-build-deployment) und pusht die Changes auf Github Pages
-  - Sobald die Action abgeschlossen ist, kann der Schüler PC aufgesetzt werden.
+- Übertrage die URL in dein Gist, damit die URL von extension.js ausgelesen werden kann.
+  - Achtung: allorigins.hexlet.app cacht Request für ca. 2 Minuten. Warte also nach einer Änderung der URL mehr als 2 Minuten, wenn in den letzten 2 Minuten vor einer Änderung von der Extension auf allorignis.hexlet.app zugegriffen wurde. 
 
 #### Schüler Computer
-- Die URL zum Localtunnel muss einmal im Browser aufgerufen werden und bestätigt werden, damit der Warning Bypass Cookie gespeichert wird.
 - Launch gemoddeten [Scratch Client mit Extension](https://sheeptester.github.io/scratch-gui/?url=https://milantheiss.github.io/ev3-scratch-interface/extension.js). (Über diesen Link sollte alles automatisch geladen werden.)
+- Wenn Scratch nicht die URL zum Localtunnel aufrufen kann, versuche die URL einmal im Browser aufzurufen.
 - Die Befehle werden an den Host Computer gesendet, sobald ein Block ausgeführt wird 
