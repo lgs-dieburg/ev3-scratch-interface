@@ -16,26 +16,6 @@ class ScratchFetch {
             "name": "EV3 Scratch Interface",
             "blocks": [
                 {
-                    "opcode": "simpleForwards",
-                    "blockType": "command",
-                    "text": "Fahre 25 cm vorwärts"
-                },
-                {
-                    "opcode": "simpleBackwards",
-                    "blockType": "command",
-                    "text": "Fahre 25 cm rückwärts"
-                },
-                {
-                    "opcode": "simpleTurnLeft",
-                    "blockType": "command",
-                    "text": "Rotiere 90 Grad linksherum",
-                },
-                {
-                    "opcode": "simpleTurnRight",
-                    "blockType": "command",
-                    "text": "Rotiere 90 Grad rechtsherum",
-                },
-                {
                     "opcode": "forwards",
                     "blockType": "command",
                     "text": "Fahre vorwärts [distanceInCM] cm",
@@ -56,6 +36,26 @@ class ScratchFetch {
                             "defaultValue": 25
                         },
                     }
+                },
+                {
+                    "opcode": "simpleTurnLeft",
+                    "blockType": "command",
+                    "text": "Rotiere 90 Grad linksherum",
+                },
+                {
+                    "opcode": "simpleTurnRight",
+                    "blockType": "command",
+                    "text": "Rotiere 90 Grad rechtsherum",
+                },
+                {
+                    "opcode": "simpleForwards",
+                    "blockType": "command",
+                    "text": "Fahre 25 cm vorwärts"
+                },
+                {
+                    "opcode": "simpleBackwards",
+                    "blockType": "command",
+                    "text": "Fahre 25 cm rückwärts"
                 },
                 {
                     "opcode": "turn",
