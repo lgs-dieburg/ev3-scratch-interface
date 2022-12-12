@@ -18,6 +18,26 @@ class ScratchFetch {
                 {
                     "opcode": "forwards",
                     "blockType": "command",
+                    "text": "Fahre 25 cm vorwärts"
+                },
+                {
+                    "opcode": "backwards",
+                    "blockType": "command",
+                    "text": "Fahre 25 cm rückwärts"
+                },
+                {
+                    "opcode": "turn(-90)",
+                    "blockType": "command",
+                    "text": "Rotiere 90 Grad linksherum",
+                },
+                {
+                    "opcode": "turn",
+                    "blockType": "command",
+                    "text": "Rotiere 90 Grad rechtsherum",
+                },
+                {
+                    "opcode": "forwards",
+                    "blockType": "command",
                     "text": "Fahre vorwärts für [timeout] Sekunden",
                     "arguments": {
                         "timeout": {
@@ -67,8 +87,8 @@ class ScratchFetch {
     }
 
     // INFO Fetch Requests mode: cors & new Header: ngrok-skip-browser-warning
-    forwards({timeout = 1}) {
-        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
+    forwards({timeout = 2}) {
+        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
             mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
@@ -76,8 +96,8 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
-    backwards({timeout = 1}) {
-        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
+    backwards({timeout = 2}) {
+        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
             mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
