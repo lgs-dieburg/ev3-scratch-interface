@@ -11,6 +11,6 @@ motors = MoveTank ("outD", "outA")
 
 if __name__ == '__main__': 
     rotations = input()
-    motors.on_for_rotations(-70, 70, rotations)
+    motors.on_for_rotations(-34.7222222, 34.7222222, rotations)
     ratio = rotations / 360
     logger.info("Rotating %s times. Ratio: %s", rotations, ratio)

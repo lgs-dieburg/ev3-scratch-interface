@@ -53,7 +53,7 @@ class EV3Controller:
                 degrees = float(request.get("parameter").get("degrees"))
                 corrected = degrees * self._rotation_ratio
                 logger.info("%s ROTATIONS", corrected)
-                movetank.on_for_rotations(50, -50, corrected)
+                movetank.on_for_rotations(34.7222222, -34.7222222, corrected)
                 self._response = dict(methode="RESPONSE", description="CONFIRMATION")
 
     @property
