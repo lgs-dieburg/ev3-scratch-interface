@@ -38,22 +38,22 @@ class ScratchFetch {
                 {
                     "opcode": "forwards",
                     "blockType": "command",
-                    "text": "Fahre vorwärts für [timeout] Sekunden",
+                    "text": "Fahre vorwärts [distanceInCM] cm",
                     "arguments": {
-                        "timeout": {
+                        "distanceInCM": {
                             "type": "number",
-                            "defaultValue": 2
+                            "defaultValue": 25
                         },
                     }
                 },
                 {
                     "opcode": "backwards",
                     "blockType": "command",
-                    "text": "Fahre rückwärts für [timeout] Sekunden",
+                    "text": "Fahre rückwärts [distanceInCM] cm",
                     "arguments": {
-                        "timeout": {
+                        "distanceInCM": {
                             "type": "number",
-                            "defaultValue": 2
+                            "defaultValue": 25
                         },
                     }
                 },
@@ -87,7 +87,8 @@ class ScratchFetch {
     }
 
     // INFO Fetch Requests mode: cors & new Header: ngrok-skip-browser-warning
-    forwards({timeout = 2}) {
+    forwards({distanceInCM = 25}) {
+        const timeout = distanceInCM / 12.5
         return fetch([this.url, "/forwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
             mode: "cors",
             headers: new Headers({
@@ -96,7 +97,8 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
-    backwards({timeout = 2}) {
+    backwards({distanceInCM = 25}) {
+        const timeout = distanceInCM / 12.5
         return fetch([this.url, "/backwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
             mode: "cors",
             headers: new Headers({
@@ -115,11 +117,11 @@ class ScratchFetch {
     }
 
     simpleForwards(){
-        return this.forwards({timeout: 2})
+        return this.forwards({distanceInCM: 25})
     }
 
     simpleBackwards() {
-        return this.backwards({timeout: 2})
+        return this.backwards({distanceInCM: 25})
     }
 
     simpleTurnLeft(){
