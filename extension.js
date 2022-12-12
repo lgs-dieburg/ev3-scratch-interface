@@ -18,35 +18,17 @@ class ScratchFetch {
                 {
                     "opcode": "forwards",
                     "blockType": "command",
-                    "text": "Fahre vorwärts für 1 Sekunden",
-                    "arguments": {
-                        "timeout": {
-                            "type": "number",
-                            "defaultValue": 1
-                        },
-                    }
+                    "text": "Fahre vorwärts für 1 Sekunden"
                 },
                 {
                     "opcode": "backwards",
                     "blockType": "command",
-                    "text": "Fahre rückwärts für 1 Sekunden",
-                    "arguments": {
-                        "timeout": {
-                            "type": "number",
-                            "defaultValue": 1
-                        },
-                    }
+                    "text": "Fahre rückwärts für 1 Sekunden"
                 },
                 {
                     "opcode": "turn",
                     "blockType": "command",
-                    "text": "Dreh dich um 90 Grad",
-                    "arguments": {
-                        "degrees": {
-                            "type": "number",
-                            "defaultValue": 90
-                        },
-                    }
+                    "text": "Dreh dich um 90 Grad"
                 },
                 {
                     "opcode": "forwards",
@@ -100,7 +82,7 @@ class ScratchFetch {
     }
 
     // INFO Fetch Requests mode: cors & new Header: ngrok-skip-browser-warning
-    forwards({timeout}) {
+    forwards({timeout = 1}) {
         return fetch([this.url, "/forwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "cors",
             headers: new Headers({
@@ -109,7 +91,7 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
-    backwards({timeout}) {
+    backwards({timeout = 1}) {
         return fetch([this.url, "/backwards?timeout=", timeout, "&speed=50"].join(""), {
             mode: "cors",
             headers: new Headers({
@@ -118,7 +100,7 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
-    turn({degrees}) {
+    turn({degrees = 90}) {
         return fetch([this.url, "/turn?degrees=", degrees].join(""), {
             mode: "cors",
             headers: new Headers({
