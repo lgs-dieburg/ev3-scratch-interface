@@ -18,21 +18,6 @@ class ScratchFetch {
                 {
                     "opcode": "forwards",
                     "blockType": "command",
-                    "text": "Fahre vorwärts für 1 Sekunden"
-                },
-                {
-                    "opcode": "backwards",
-                    "blockType": "command",
-                    "text": "Fahre rückwärts für 1 Sekunden"
-                },
-                {
-                    "opcode": "turn",
-                    "blockType": "command",
-                    "text": "Dreh dich um 90 Grad"
-                },
-                {
-                    "opcode": "forwards",
-                    "blockType": "command",
                     "text": "Fahre vorwärts für [timeout] Sekunden",
                     "arguments": {
                         "timeout": {
