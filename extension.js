@@ -106,7 +106,7 @@ class ScratchFetch {
     }
 
     async getAvailableUnits(){
-        let res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json&disableCache=true')}`)
+        let res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://gist.githubusercontent.com/milantheiss/9364995837bbd94ed548857c5b9f7f70/raw/localtunnels.json&disableCache=true')}`)
         res = await res.text()
         res = JSON.parse(res)
         console.log(res)
