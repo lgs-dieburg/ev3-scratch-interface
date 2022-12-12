@@ -16,22 +16,22 @@ class ScratchFetch {
             "name": "EV3 Scratch Interface",
             "blocks": [
                 {
-                    "opcode": "forwards",
+                    "opcode": "simpleForwards",
                     "blockType": "command",
                     "text": "Fahre 25 cm vorwärts"
                 },
                 {
-                    "opcode": "backwards",
+                    "opcode": "simpleBackwards",
                     "blockType": "command",
                     "text": "Fahre 25 cm rückwärts"
                 },
                 {
-                    "opcode": "turn(-90)",
+                    "opcode": "simpleTurnLeft",
                     "blockType": "command",
                     "text": "Rotiere 90 Grad linksherum",
                 },
                 {
-                    "opcode": "turn",
+                    "opcode": "simpleTurnRight",
                     "blockType": "command",
                     "text": "Rotiere 90 Grad rechtsherum",
                 },
@@ -114,6 +114,21 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
+    simpleForwards(){
+        return this.forwards({timeout: 2})
+    }
+
+    simpleBackwards() {
+        return this.backwards({timeout: 2})
+    }
+
+    simpleTurnLeft(){
+        return this.turn({degrees: -90})
+    }
+
+    simpleTurnRight(){
+        return this.turn({degrees: 90})
+    }
     setURL({unitName = undefined, index = 0}) {
         if (typeof unitName !== "undefined") {
             console.log(unitName)
