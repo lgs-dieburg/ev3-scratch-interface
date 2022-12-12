@@ -42,8 +42,7 @@ class EV3Controller:
             if request.get("parameter").get("command") == "forwards":
                 timeout = float(request.get("parameter").get("timeout"))
                 speed = float(request.get("parameter").get("speed"))
-                logger.info(speed)
-                movetank.on_for_seconds(speed * 0.9926, speed, timeout)
+                movetank.on_for_seconds(speed, speed, timeout)
                 self._response = dict(methode="RESPONSE", description="CONFIRMATION")
             elif request.get("parameter").get("command") == "backwards":
                 timeout = float(request.get("parameter").get("timeout"))
