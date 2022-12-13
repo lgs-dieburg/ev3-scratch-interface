@@ -7,10 +7,10 @@ logging.basicConfig(format="%(asctime)s %(name)s %(message)s")
 logger = logging.getLogger('Kalibrierungs Tool')
 logger.setLevel(logging.INFO)
 
-motors = MoveTank ("outD", "outA")
+motors = MoveTank ("outA", "outB")
 
 if __name__ == '__main__': 
-    rotations = input()
+    rotations = 5.82
     motors.on_for_rotations(-34.7222222, 34.7222222, rotations)
     ratio = rotations / 360
     logger.info("Rotating %s times. Ratio: %s", rotations, ratio)

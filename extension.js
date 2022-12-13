@@ -22,7 +22,7 @@ class ScratchFetch {
                     "arguments": {
                         "distanceInCM": {
                             "type": "number",
-                            "defaultValue": 25
+                            "defaultValue": 35
                         },
                     }
                 },
@@ -33,7 +33,7 @@ class ScratchFetch {
                     "arguments": {
                         "distanceInCM": {
                             "type": "number",
-                            "defaultValue": 25
+                            "defaultValue": 35
                         },
                     }
                 },
@@ -87,9 +87,9 @@ class ScratchFetch {
     }
 
     // INFO Fetch Requests mode: cors & new Header: ngrok-skip-browser-warning
-    forwards({distanceInCM = 25}) {
-        const timeout = distanceInCM / 12.5
-        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
+    forwards({distanceInCM = 35}) {
+        const timeout = distanceInCM / 17.5
+        return fetch([this.url, "/forwards?timeout=", timeout, "&speed=48.61111111"].join(""), {
             mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
@@ -97,9 +97,9 @@ class ScratchFetch {
         }).then(response => response.text())
     }
 
-    backwards({distanceInCM = 25}) {
-        const timeout = distanceInCM / 12.5
-        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=34.7222222"].join(""), {
+    backwards({distanceInCM = 35}) {
+        const timeout = distanceInCM / 17.5
+        return fetch([this.url, "/backwards?timeout=", timeout, "&speed=48.61111111"].join(""), {
             mode: "cors",
             headers: new Headers({
                 "ngrok-skip-browser-warning": "69420"
