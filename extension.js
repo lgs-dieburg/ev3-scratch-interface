@@ -50,12 +50,12 @@ class ScratchFetch {
                 {
                     "opcode": "simpleForwards",
                     "blockType": "command",
-                    "text": "Fahre 25 cm vorwärts"
+                    "text": "Fahre 35 cm vorwärts"
                 },
                 {
                     "opcode": "simpleBackwards",
                     "blockType": "command",
-                    "text": "Fahre 25 cm rückwärts"
+                    "text": "Fahre 35 cm rückwärts"
                 },
                 {
                     "opcode": "turn",
