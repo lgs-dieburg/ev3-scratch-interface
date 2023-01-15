@@ -26,6 +26,6 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
   - Achtung: allorigins.hexlet.app cacht Request für ca. 2 Minuten. Warte also nach einer Änderung der URL mehr als 2 Minuten, wenn in den letzten 2 Minuten vor einer Änderung von der Extension auf allorignis.hexlet.app zugegriffen wurde. 
 
 #### Schüler Computer
-- Launch gemoddeten [Scratch Client mit Extension](https://sheeptester.github.io/scratch-gui/?url=https://milantheiss.github.io/ev3-scratch-interface/extension.js). (Über diesen Link sollte alles automatisch geladen werden.)
+- Launch gemoddeten [Scratch Client mit Extension](https://sheeptester.github.io/scratch-gui/?url=https://lgs-dieburg.github.io/ev3-scratch-interface/extension.js). (Über diesen Link sollte alles automatisch geladen werden.)
 - Wenn Scratch nicht die URL zum Localtunnel aufrufen kann, versuche die URL einmal im Browser aufzurufen.
 - Die Befehle werden an den Host Computer gesendet, sobald ein Block ausgeführt wird 
