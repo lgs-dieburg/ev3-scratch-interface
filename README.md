@@ -32,3 +32,12 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 
 ## Adaption für andere Zwecke  
 Das Interface kann auch außerhalb von Scratch genutzt werden, so lang auf die API Endpunkte aufgerufen werden können. 
+
+## Erweiterung zum neue Befehle  
+Um neue, vom EV3 Roboter interpretierbare Befehle hinzuzufügen, müssen ```host/control.py``` & ```ev3/control.py``` modifiziert werden.  
+In host/control.py muss ein neuer API Endpoint hinzugefügt werden. Eine neue Methode muss mit ```@app.route("/<Befehl>")``` & ```@cross_origin()``` beschrieben sein, damit Flask die Methode bei einem API Call an die angegebene Adresse aufruft. 
+[Mehr Infos zu Flask hier](https://flask.palletsprojects.com/en/2.2.x/)  
+In der neuen Methode kann mit ```controller.add_request_to_queue()``` ein neue Request an den EV3 gesendet werden. ```add_request_to_queue``` verlangt zwei Parameter.
+Zuerst wird die Send Methode verlangt und dann in einem dict Argumente.
+
+Requests an den EV3 werden in ```ev3/control.py```: ```process_request``` verarbeitet. Der neue Command muss zum IF-Statement hinzugefügt werden und mit der Aktion, die der EV3 ausführen soll verbunden werden.
