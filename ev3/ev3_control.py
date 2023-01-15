@@ -19,7 +19,9 @@ motors = MoveJoystick("outA", "outB")
 movetank = MoveTank("outA", "outB")
 
 
+# Setzt Action für Gamepad Event left_stick
 def action_left_stick():
+    # Roboter fährt entsprechen der Position des linken Joysticks
     motors.on(limit_input_percentage(gamepad.connected_gamepad.LEFT_STICK_X, 70),
               limit_input_percentage((gamepad.connected_gamepad.LEFT_STICK_Y * -1), 70))
 
@@ -38,24 +40,30 @@ class EV3Controller:
     def process_request(self, request):
 
         logger.info("Processing Request: %s", request)
+        # Verarbeitet Requests
+
+        # POST sind alle Requests, die Daten an den EV3 senden. 
+        # Von POST Requests wird nur eine SUCCESS Response erwartet.
         if request.get("methode") == "POST":
             if request.get("parameter").get("command") == "forwards":
                 timeout = float(request.get("parameter").get("timeout"))
                 speed = float(request.get("parameter").get("speed"))
                 movetank.on_for_seconds(speed, speed, timeout)
-                self._response = dict(methode="RESPONSE", description="CONFIRMATION")
+                self._response = dict(methode="RESPONSE", description="SUCCESS")
             elif request.get("parameter").get("command") == "backwards":
                 timeout = float(request.get("parameter").get("timeout"))
                 speed = float(request.get("parameter").get("speed")) * -1
                 movetank.on_for_seconds(speed, speed, timeout)
-                self._response = dict(methode="RESPONSE", description="CONFIRMATION")
+                self._response = dict(methode="RESPONSE", description="SUCCESS")
             elif request.get("parameter").get("command") == "rotate":
                 degrees = float(request.get("parameter").get("degrees"))
                 corrected = degrees * self._rotation_ratio
                 logger.info("%s ROTATIONS", corrected)
                 movetank.on_for_rotations(34.7222222, -34.7222222, corrected)
-                self._response = dict(methode="RESPONSE", description="CONFIRMATION")
-
+                self._response = dict(methode="RESPONSE", description="SUCCESS")
+        # process_request kann um mehr Methoden erweitert werden
+        # z.B. GET, PUT, DELETE
+        
     @property
     def response(self):
         logger.debug("Response %s", self._response)
@@ -70,5 +78,5 @@ if __name__ == '__main__':
     while not gamepad.connected_gamepad.checking_for_inputs:
         sleep(1)
 
+    # Wenn ein Bluethooth Controller verbunden ist, können auch Input von diesem genutzt werden
     gamepad.handle_stick_outputs(action_left_stick=action_left_stick)
-    #Change checking for inputs to false to stop handleing --> bei Command

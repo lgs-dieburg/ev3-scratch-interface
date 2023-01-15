@@ -26,14 +26,17 @@ class Controller:
     # Hier wird die Response des EV3 Servers angenommen
     def process_response(self, response):
         if response.get("methode") == "RESPONSE":
-            logger.info("EV3 has received to command.")
-            self._response_received = True
+            if response.get("description") == "SUCCESS":
+                logger.info("EV3 has received the command.")
+                self._response_received = True
 
     # Fügt einen neue Request der Queue hinzu.
     def add_request_to_queue(self, methode, parameter):
         logger.info(f"Added {methode}, {parameter}")
         self._request_queue.append(dict(methode=methode, parameter=parameter))
 
+    # Startet den Request Thread
+    # Der Thread wartet auf neue Requests in der Queue und sendet diese an den EV3 Server
     def start_requesting(self):
         logger.info("Monit Requests")
         while True:
@@ -45,6 +48,7 @@ class Controller:
                 while self._response_received is False:
                     sleep(1)
 
+    # Gibt die Response zurück
     @property
     def response(self):
         logger.debug("Response %s", self._response)
@@ -60,6 +64,7 @@ class Controller:
         self._requesting_thread.start()
 
 
+# Erstellt die Flask App
 def create_app():
     global controller
 
@@ -94,16 +99,22 @@ def move_forwards():
         # TODO None handling hinzufügen
         logger.info("param timeout or speed is None")
     else:
+        # Limitiert die Laufzeit des Befehls auf 15 Sekunden
         if timeout > 15:
             timeout = 15
         elif timeout < 0:
             timeout = 0
+
+        # Stellt sicher, dass die Geschwindigkeit zwischen 0 und 100 liegt    
         if speed < 0:
             speed = abs(speed)
         if speed > 100:
             speed = 100
+
+        # Führt den Befehl aus, wenn die Geschwindigkeit und die Laufzeit größer als 0 sind    
         if speed > 0 and timeout > 0:
             logger.info(f"{dict(command='forwards', timeout=timeout, speed=speed)}")
+            # Fügt den Befehl der Queue hinzu
             controller.add_request_to_queue("POST", dict(command="forwards", timeout=timeout, speed=speed))
             return f"Fahre vorwärts {timeout} Sekunden lang mit einer Geschwindigkeit von {speed} %"
 
@@ -125,15 +136,21 @@ def move_backwards():
         # TODO None handling hinzufügen
         logger.debug("param timeout or speed is None")
     else:
+        # Limitiert die Laufzeit des Befehls auf 15 Sekunden
         if timeout > 15:
             timeout = 15
         elif timeout < 0:
             timeout = 0
+
+        # Stellt sicher, dass die Geschwindigkeit zwischen 0 und 100 liegt    
         if speed < 0:
             speed = abs(speed)
         if speed > 100:
             speed = 100
+
+        # Führt den Befehl aus, wenn die Geschwindigkeit und die Laufzeit größer als 0 sind
         if speed > 0 and timeout > 0:
+            # Fügt den Befehl der Queue hinzu
             controller.add_request_to_queue("POST", dict(
                 command="backwards", timeout=timeout, speed=speed))
             return "backwards"
@@ -158,12 +175,16 @@ def rotate_for():
         logger.debug("param degrees is None")
     else:
         degrees = int(degrees)
+        # Stellt sicher, dass die Gradzahl zwischen -360 und 360 liegt
+        # Wenn die Gradzahl größer als 360 ist, wird sie um 360 verringert und der Restwert genommen
         if degrees < 0:
             if (abs(degrees) / 360) > 1:
                 degrees = abs(degrees) % 360 * -1
         else:
             if (degrees / 360) > 1:
                 degrees = degrees % 360
+
+        # Sendet nur den Befehl wenn die Gradzahl nicht 0 ist, damit keine unnötigen Requests gesendet werden
         if degrees != 0:
             controller.add_request_to_queue(
                 "POST", dict(command="rotate", degrees=degrees))

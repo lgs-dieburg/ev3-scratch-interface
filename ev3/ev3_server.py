@@ -163,7 +163,7 @@ class Message:
         if mask & selectors.EVENT_WRITE:
             self.write()
 
-    # Response wird dann an Missioncontroll weitergeben
+    # Response wird dann an control.py weitergeben
     def read(self):
         self._read()
 
@@ -178,7 +178,7 @@ class Message:
             if self.request is None:
                 self.process_request()
 
-    # Link hier what to do. Hier wird die Response erstellt
+    # Hier wird die Response erstellt
     def write(self):
         if self.request:
             if not self.response_created:
@@ -205,7 +205,6 @@ class Message:
     def process_protoheader(self):
         hdrlen = 2
         if len(self._recv_buffer) >= hdrlen:
-            # logger.debug("Processing proto header")
             self._jsonheader_len = struct.unpack(
                 ">H", self._recv_buffer[:hdrlen]
             )[0]
@@ -214,7 +213,6 @@ class Message:
     def process_jsonheader(self):
         hdrlen = self._jsonheader_len
         if len(self._recv_buffer) >= hdrlen:
-            # logger.debug("Processing JSON header")
             self.jsonheader = self._json_decode(
                 self._recv_buffer[:hdrlen], "utf-8"
             )
@@ -236,7 +234,6 @@ class Message:
         data = self._recv_buffer[:content_len]
         self._recv_buffer = self._recv_buffer[content_len:]
         if self.jsonheader["content-type"] == "text/json":
-            # logger.debug("Processing JSON Content")
             encoding = self.jsonheader["content-encoding"]
             self.request = self._json_decode(data, encoding)
             logger.info("Received request %s - %s from %s", repr(self.request.get("methode")),
