@@ -29,3 +29,7 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 - Launch gemoddeten [Scratch Client mit Extension](https://sheeptester.github.io/scratch-gui/?url=https://lgs-dieburg.github.io/ev3-scratch-interface/extension.js). (Über diesen Link sollte alles automatisch geladen werden.)
 - Wenn Scratch nicht die URL zum Localtunnel aufrufen kann, versuche die URL einmal im Browser aufzurufen.
 - Die Befehle werden an den Host Computer gesendet, sobald ein Block ausgeführt wird 
+
+##Adaption für andere Zwecke
+Das Interface kann auch außerhalb von Scratch genutzt werden, so lang auf die REST API zugegriffen werden kann. 
+So kann man einfach die URL über den Browser aufrufen.
