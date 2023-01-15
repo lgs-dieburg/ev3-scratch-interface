@@ -30,6 +30,5 @@ Die Requests werden dann vom API Host interpretiert und an den EV3 geschickt.
 - Wenn Scratch nicht die URL zum Localtunnel aufrufen kann, versuche die URL einmal im Browser aufzurufen.
 - Die Befehle werden an den Host Computer gesendet, sobald ein Block ausgeführt wird 
 
-##Adaption für andere Zwecke
-Das Interface kann auch außerhalb von Scratch genutzt werden, so lang auf die REST API zugegriffen werden kann. 
-So kann man einfach die URL über den Browser aufrufen.
+## Adaption für andere Zwecke  
+Das Interface kann auch außerhalb von Scratch genutzt werden, so lang auf die API Endpunkte aufgerufen werden können. 
